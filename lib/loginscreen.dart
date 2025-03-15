@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:login_signup_firebase_flutter/Services/authservice.dart';
+import 'package:login_signup_firebase_flutter/forgot.dart';
 
-class Loginscreen extends StatelessWidget {
+class Loginscreen extends StatefulWidget {
   const Loginscreen({super.key});
 
+  @override
+  State<Loginscreen> createState() => _LoginscreenState();
+}
+
+class _LoginscreenState extends State<Loginscreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -44,6 +55,7 @@ class Loginscreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(15),
             child: TextField(
+              controller: emailController,
               decoration: InputDecoration(
                 hintText: "Enter your email",
                 border: OutlineInputBorder(
@@ -57,6 +69,7 @@ class Loginscreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(15),
             child: TextField(
+              controller: passwordController,
               decoration: InputDecoration(
                 suffixIcon: Icon(Icons.visibility, color: Colors.grey),
                 hintText: "Enter your password",
@@ -70,16 +83,18 @@ class Loginscreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 250),
-            child: Text(
-              "forgot password?",
-              style: TextStyle(color: Colors.grey),
+            child: TextButton(child: Text("forgot password?",       style: TextStyle(color: Colors.grey),)
+            ,onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Forgot()));
+            },
+       
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),backgroundColor: Colors.black,minimumSize: Size(double.infinity, 45)),
-              onPressed: () {},
+              onPressed: () {login(Email: emailController.text, Password:passwordController.text , context: context);},
             
               child: Text(
                 "Login",
@@ -125,7 +140,7 @@ class Loginscreen extends StatelessWidget {
              ],
            ),
          )
-,SizedBox(height: 220,),
+,SizedBox(height: 300,),
           Padding(
             padding: const EdgeInsets.only(left: 100),
             child: Row(
